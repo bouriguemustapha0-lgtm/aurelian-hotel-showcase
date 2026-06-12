@@ -128,8 +128,6 @@
   text-transform: uppercase;
   transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   border: 1px solid var(--color-gold);
-}
-@utility btn-gold {
   &:hover {
     background: transparent;
     color: var(--color-background);
@@ -150,8 +148,6 @@
   text-transform: uppercase;
   transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   border: 1px solid color-mix(in oklab, var(--color-background) 60%, transparent);
-}
-@utility btn-outline-gold {
   &:hover {
     background: var(--color-gold);
     color: var(--color-charcoal);
