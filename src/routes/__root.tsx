@@ -90,6 +90,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Maison Aurelle — Luxury Hotel & Resort" },
+      { name: "description", content: "Aurelian Hotel Showcase is a frontend-only website displaying luxury hotel offerings." },
+      { property: "og:description", content: "Aurelian Hotel Showcase is a frontend-only website displaying luxury hotel offerings." },
+      { name: "twitter:description", content: "Aurelian Hotel Showcase is a frontend-only website displaying luxury hotel offerings." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a9c0833-7fcb-4ab5-a09f-4c65b8c6324d/id-preview-4ca7fcea--e3c94b9b-8f9d-418d-bbcb-cd192135b64b.lovable.app-1781276555237.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4a9c0833-7fcb-4ab5-a09f-4c65b8c6324d/id-preview-4ca7fcea--e3c94b9b-8f9d-418d-bbcb-cd192135b64b.lovable.app-1781276555237.png" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
