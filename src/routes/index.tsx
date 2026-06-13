@@ -323,6 +323,13 @@ function Hero() {
 /* --------------------------- About --------------------------- */
 
 function About() {
+  const { t } = useI18n();
+  const features = [
+    { t: t("about.f1.t"), d: t("about.f1.d") },
+    { t: t("about.f2.t"), d: t("about.f2.d") },
+    { t: t("about.f3.t"), d: t("about.f3.d") },
+    { t: t("about.f4.t"), d: t("about.f4.d") },
+  ];
   return (
     <section className="bg-background px-6 py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 md:grid-cols-2 md:items-center">
@@ -343,18 +350,13 @@ function About() {
 
         <div>
           <SectionHeading
-            eyebrow="Our Story"
-            title="A sanctuary where heritage meets quiet modernity."
-            description="Set within a restored Belle Époque landmark, Maison Aurelle is a love letter to slow luxury — soft warm light, hand-finished marble, and a service philosophy passed down through generations of hoteliers."
+            eyebrow={t("about.eyebrow")}
+            title={t("about.title")}
+            description={t("about.desc")}
           />
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {[
-              { t: "Hand-crafted Interiors", d: "Bespoke furnishings sourced from European ateliers." },
-              { t: "Michelin-trained Kitchen", d: "Seasonal menus by a two-star executive chef." },
-              { t: "Personal Concierge", d: "A dedicated guest host across your entire stay." },
-              { t: "Wellness Sanctuary", d: "A subterranean spa with mineral hammam & cold plunge." },
-            ].map((it, i) => (
+            {features.map((it, i) => (
               <Reveal key={it.t} delay={0.05 * i}>
                 <div className="border-t border-border pt-5">
                   <h3 className="text-xl">{it.t}</h3>
