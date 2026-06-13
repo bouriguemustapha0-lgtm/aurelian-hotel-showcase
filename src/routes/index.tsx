@@ -237,6 +237,7 @@ function Navbar() {
 /* --------------------------- Hero --------------------------- */
 
 function Hero() {
+  const { t } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -263,7 +264,7 @@ function Hero() {
           className="flex items-center gap-3"
         >
           <span className="gold-line" />
-          <span className="eyebrow">Five-Star Sanctuary · Est. 2014</span>
+          <span className="eyebrow">{t("hero.eyebrow")}</span>
           <span className="gold-line" />
         </motion.div>
 
@@ -273,7 +274,7 @@ function Hero() {
           transition={{ duration: 1.1, delay: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
           className="mt-6 max-w-4xl text-5xl leading-[1.02] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
         >
-          Experience Luxury <em className="italic text-[var(--color-gold-soft)]">Beyond</em> Expectations
+          {t("hero.title.1")} <em className="italic text-[var(--color-gold-soft)]">{t("hero.title.em")}</em> {t("hero.title.2")}
         </motion.h1>
 
         <motion.p
@@ -282,7 +283,7 @@ function Hero() {
           transition={{ duration: 0.9, delay: 0.7 }}
           className="mt-6 max-w-xl text-base leading-relaxed text-background/80 sm:text-lg"
         >
-          Discover elegant rooms, premium comfort, and unforgettable hospitality at the heart of a city that never sleeps.
+          {t("hero.desc")}
         </motion.p>
 
         <motion.div
@@ -292,10 +293,10 @@ function Hero() {
           className="mt-10 flex flex-wrap items-center justify-center gap-4"
         >
           <a href="#rooms" className="btn-gold">
-            Explore Rooms <ArrowUpRight size={14} />
+            {t("hero.cta1")} <ArrowUpRight size={14} />
           </a>
           <a href="#contact" className="btn-outline-gold">
-            Contact Us
+            {t("hero.cta2")}
           </a>
         </motion.div>
       </motion.div>
@@ -307,7 +308,7 @@ function Hero() {
         className="absolute inset-x-0 bottom-8 z-10 flex justify-center"
       >
         <div className="flex flex-col items-center gap-2 text-background/70">
-          <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+          <span className="text-[10px] uppercase tracking-[0.3em]">{t("hero.scroll")}</span>
           <motion.span
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
