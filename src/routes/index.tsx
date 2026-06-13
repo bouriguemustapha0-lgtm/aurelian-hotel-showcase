@@ -21,6 +21,7 @@ import {
   Quote,
   Star,
 } from "lucide-react";
+import { I18nProvider, LanguageSwitcher, useI18n } from "@/lib/i18n";
 
 import hero from "@/assets/hotel/hero.jpg";
 import about from "@/assets/hotel/about.jpg";
@@ -122,14 +123,15 @@ function SectionHeading({
 /* --------------------------- Navbar --------------------------- */
 
 const NAV = [
-  { href: "#home", label: "Home" },
-  { href: "#rooms", label: "Rooms" },
-  { href: "#amenities", label: "Amenities" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#contact", label: "Contact" },
+  { href: "#home", key: "nav.home" },
+  { href: "#rooms", key: "nav.rooms" },
+  { href: "#amenities", key: "nav.amenities" },
+  { href: "#gallery", key: "nav.gallery" },
+  { href: "#contact", key: "nav.contact" },
 ];
 
 function Navbar() {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -169,13 +171,14 @@ function Navbar() {
                   scrolled ? "text-foreground/80" : "text-background/85"
                 }`}
               >
-                {n.label}
+                {t(n.key)}
               </a>
             </li>
           ))}
         </ul>
 
-        <div className="hidden justify-end md:flex">
+        <div className="hidden items-center justify-end gap-6 md:flex">
+          <LanguageSwitcher dark={scrolled} />
           <a
             href="tel:+18005550199"
             className={`inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] transition-colors hover:text-[var(--color-gold)] ${
@@ -186,13 +189,16 @@ function Navbar() {
           </a>
         </div>
 
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setOpen((v) => !v)}
-          className={`justify-self-end md:hidden ${scrolled ? "text-foreground" : "text-background"}`}
-        >
-          {open ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-4 justify-self-end md:hidden">
+          <LanguageSwitcher dark={scrolled} />
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setOpen((v) => !v)}
+            className={scrolled ? "text-foreground" : "text-background"}
+          >
+            {open ? <X /> : <Menu />}
+          </button>
+        </div>
       </nav>
 
       {/* mobile menu */}
@@ -210,7 +216,7 @@ function Navbar() {
                 onClick={() => setOpen(false)}
                 className="block py-3 text-sm uppercase tracking-[0.22em] text-foreground/80 hover:text-[var(--color-gold)]"
               >
-                {n.label}
+                {t(n.key)}
               </a>
             </li>
           ))}
@@ -231,6 +237,7 @@ function Navbar() {
 /* --------------------------- Hero --------------------------- */
 
 function Hero() {
+  const { t } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -257,7 +264,7 @@ function Hero() {
           className="flex items-center gap-3"
         >
           <span className="gold-line" />
-          <span className="eyebrow">Five-Star Sanctuary · Est. 2014</span>
+          <span className="eyebrow">{t("hero.eyebrow")}</span>
           <span className="gold-line" />
         </motion.div>
 
@@ -267,7 +274,7 @@ function Hero() {
           transition={{ duration: 1.1, delay: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
           className="mt-6 max-w-4xl text-5xl leading-[1.02] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
         >
-          Experience Luxury <em className="italic text-[var(--color-gold-soft)]">Beyond</em> Expectations
+          {t("hero.title.1")} <em className="italic text-[var(--color-gold-soft)]">{t("hero.title.em")}</em> {t("hero.title.2")}
         </motion.h1>
 
         <motion.p
@@ -276,7 +283,7 @@ function Hero() {
           transition={{ duration: 0.9, delay: 0.7 }}
           className="mt-6 max-w-xl text-base leading-relaxed text-background/80 sm:text-lg"
         >
-          Discover elegant rooms, premium comfort, and unforgettable hospitality at the heart of a city that never sleeps.
+          {t("hero.desc")}
         </motion.p>
 
         <motion.div
@@ -286,10 +293,10 @@ function Hero() {
           className="mt-10 flex flex-wrap items-center justify-center gap-4"
         >
           <a href="#rooms" className="btn-gold">
-            Explore Rooms <ArrowUpRight size={14} />
+            {t("hero.cta1")} <ArrowUpRight size={14} />
           </a>
           <a href="#contact" className="btn-outline-gold">
-            Contact Us
+            {t("hero.cta2")}
           </a>
         </motion.div>
       </motion.div>
@@ -301,7 +308,7 @@ function Hero() {
         className="absolute inset-x-0 bottom-8 z-10 flex justify-center"
       >
         <div className="flex flex-col items-center gap-2 text-background/70">
-          <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+          <span className="text-[10px] uppercase tracking-[0.3em]">{t("hero.scroll")}</span>
           <motion.span
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
@@ -316,6 +323,13 @@ function Hero() {
 /* --------------------------- About --------------------------- */
 
 function About() {
+  const { t } = useI18n();
+  const features = [
+    { t: t("about.f1.t"), d: t("about.f1.d") },
+    { t: t("about.f2.t"), d: t("about.f2.d") },
+    { t: t("about.f3.t"), d: t("about.f3.d") },
+    { t: t("about.f4.t"), d: t("about.f4.d") },
+  ];
   return (
     <section className="bg-background px-6 py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 md:grid-cols-2 md:items-center">
@@ -336,18 +350,13 @@ function About() {
 
         <div>
           <SectionHeading
-            eyebrow="Our Story"
-            title="A sanctuary where heritage meets quiet modernity."
-            description="Set within a restored Belle Époque landmark, Maison Aurelle is a love letter to slow luxury — soft warm light, hand-finished marble, and a service philosophy passed down through generations of hoteliers."
+            eyebrow={t("about.eyebrow")}
+            title={t("about.title")}
+            description={t("about.desc")}
           />
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {[
-              { t: "Hand-crafted Interiors", d: "Bespoke furnishings sourced from European ateliers." },
-              { t: "Michelin-trained Kitchen", d: "Seasonal menus by a two-star executive chef." },
-              { t: "Personal Concierge", d: "A dedicated guest host across your entire stay." },
-              { t: "Wellness Sanctuary", d: "A subterranean spa with mineral hammam & cold plunge." },
-            ].map((it, i) => (
+            {features.map((it, i) => (
               <Reveal key={it.t} delay={0.05 * i}>
                 <div className="border-t border-border pt-5">
                   <h3 className="text-xl">{it.t}</h3>
@@ -364,71 +373,50 @@ function About() {
 
 /* --------------------------- Rooms --------------------------- */
 
-const ROOMS = [
-  {
-    img: room1,
-    name: "Deluxe King",
-    description: "A serene retreat with panoramic skyline windows and warm silk linens.",
-    capacity: "2 Guests",
-    size: "48 m²",
-    price: 480,
-  },
-  {
-    img: room2,
-    name: "Executive Suite",
-    description: "A private living room with hand-stitched leather and bespoke joinery.",
-    capacity: "3 Guests",
-    size: "72 m²",
-    price: 720,
-  },
-  {
-    img: room3,
-    name: "Aurelle Penthouse",
-    description: "Our signature top-floor residence with private terrace and butler.",
-    capacity: "4 Guests",
-    size: "140 m²",
-    price: 1480,
-  },
-];
-
 function Rooms() {
+  const { t } = useI18n();
+  const ROOMS = [
+    { img: room1, nameKey: "room.deluxe.name", descKey: "room.deluxe.desc", capacity: 2, size: "48 m²", price: 480 },
+    { img: room2, nameKey: "room.exec.name", descKey: "room.exec.desc", capacity: 3, size: "72 m²", price: 720 },
+    { img: room3, nameKey: "room.pent.name", descKey: "room.pent.desc", capacity: 4, size: "140 m²", price: 1480 },
+  ];
   return (
     <section id="rooms" className="bg-muted/50 px-6 py-24 md:py-32">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           center
-          eyebrow="Signature Stays"
-          title="Featured Rooms & Suites"
-          description="Each space is composed as a private retreat — a deliberate balance of warm white, charcoal stone and quiet gold detail."
+          eyebrow={t("rooms.eyebrow")}
+          title={t("rooms.title")}
+          description={t("rooms.desc")}
         />
 
         <div className="mt-16 grid gap-10 md:grid-cols-3">
           {ROOMS.map((r, i) => (
-            <Reveal key={r.name} delay={i * 0.1}>
+            <Reveal key={r.nameKey} delay={i * 0.1}>
               <article className="group relative flex h-full flex-col bg-card shadow-[var(--shadow-soft)] transition-shadow duration-500 hover:shadow-[var(--shadow-luxe)]">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={r.img}
-                    alt={`${r.name} at Maison Aurelle`}
+                    alt={`${t(r.nameKey)} at Maison Aurelle`}
                     loading="lazy"
                     width={1280}
                     height={960}
                     className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
                   />
                   <div className="absolute right-0 top-0 bg-background/95 px-5 py-3 text-right">
-                    <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">From</div>
+                    <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("rooms.from")}</div>
                     <div className="font-display text-2xl text-foreground">
                       ${r.price}
-                      <span className="text-xs text-muted-foreground"> /night</span>
+                      <span className="text-xs text-muted-foreground"> {t("rooms.night")}</span>
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-7">
-                  <h3 className="text-2xl">{r.name}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{r.description}</p>
+                  <h3 className="text-2xl">{t(r.nameKey)}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{t(r.descKey)}</p>
                   <div className="mt-6 flex items-center gap-5 text-xs uppercase tracking-[0.18em] text-foreground/70">
                     <span className="inline-flex items-center gap-2">
-                      <Users size={14} className="text-[var(--color-gold)]" /> {r.capacity}
+                      <Users size={14} className="text-[var(--color-gold)]" /> {r.capacity} {t("rooms.guests")}
                     </span>
                     <span className="inline-flex items-center gap-2">
                       <Maximize size={14} className="text-[var(--color-gold)]" /> {r.size}
@@ -438,7 +426,7 @@ function Rooms() {
                     href="#contact"
                     className="mt-7 inline-flex items-center justify-between border-t border-border pt-5 text-xs uppercase tracking-[0.22em] text-foreground transition-colors hover:text-[var(--color-gold)]"
                   >
-                    View Details
+                    {t("rooms.view")}
                     <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                 </div>
@@ -453,36 +441,33 @@ function Rooms() {
 
 /* --------------------------- Amenities --------------------------- */
 
-const AMENITIES = [
-  { icon: Wifi, t: "Free Wi-Fi", d: "Lightning-fast fibre across every suite." },
-  { icon: UtensilsCrossed, t: "Restaurant", d: "Seasonal tasting menu by Chef Lemaire." },
-  { icon: Waves, t: "Swimming Pool", d: "Heated rooftop infinity pool with city view." },
-  { icon: Dumbbell, t: "Fitness Studio", d: "24/7 strength & cardio with Technogym." },
-  { icon: Sparkles, t: "Aurelle Spa", d: "Hammam, sauna and signature gold facials." },
-  { icon: Car, t: "Valet Parking", d: "Discreet underground parking with concierge." },
+const AMENITY_ITEMS = [
+  { icon: Wifi, tk: "am.wifi.t", dk: "am.wifi.d" },
+  { icon: UtensilsCrossed, tk: "am.rest.t", dk: "am.rest.d" },
+  { icon: Waves, tk: "am.pool.t", dk: "am.pool.d" },
+  { icon: Dumbbell, tk: "am.fit.t", dk: "am.fit.d" },
+  { icon: Sparkles, tk: "am.spa.t", dk: "am.spa.d" },
+  { icon: Car, tk: "am.valet.t", dk: "am.valet.d" },
 ];
 
 function Amenities() {
+  const { t } = useI18n();
   return (
     <section id="amenities" className="bg-background px-6 py-24 md:py-32">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          center
-          eyebrow="Hotel Amenities"
-          title="Curated comforts, refined to the smallest detail."
-        />
+        <SectionHeading center eyebrow={t("am.eyebrow")} title={t("am.title")} />
         <div className="mt-16 grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
-          {AMENITIES.map((a, i) => {
+          {AMENITY_ITEMS.map((a, i) => {
             const Icon = a.icon;
             return (
-              <Reveal key={a.t} delay={i * 0.05}>
+              <Reveal key={a.tk} delay={i * 0.05}>
                 <div className="group flex h-full flex-col items-start gap-5 bg-background p-10 transition-colors duration-500 hover:bg-muted/60">
                   <div className="grid h-14 w-14 place-items-center rounded-full border border-[var(--color-gold)] text-[var(--color-gold)] transition-transform duration-500 group-hover:-translate-y-1">
                     <Icon size={22} strokeWidth={1.4} />
                   </div>
                   <div>
-                    <h3 className="text-2xl">{a.t}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a.d}</p>
+                    <h3 className="text-2xl">{t(a.tk)}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(a.dk)}</p>
                   </div>
                 </div>
               </Reveal>
@@ -497,39 +482,46 @@ function Amenities() {
 /* --------------------------- Gallery --------------------------- */
 
 const GALLERY = [
-  { src: g1, cat: "Exterior", alt: "Infinity pool at dusk", span: "row-span-2" },
-  { src: g2, cat: "Interior", alt: "Fine dining restaurant", span: "" },
-  { src: room1, cat: "Rooms", alt: "Deluxe king suite", span: "" },
-  { src: g5, cat: "Experience", alt: "Rooftop terrace bar", span: "" },
-  { src: g3, cat: "Experience", alt: "Spa room with candles", span: "row-span-2" },
-  { src: g6, cat: "Interior", alt: "Marble bathroom", span: "" },
-  { src: g4, cat: "Exterior", alt: "Illuminated facade at night", span: "" },
-  { src: room3, cat: "Rooms", alt: "Penthouse living area", span: "" },
+  { src: g1, cat: "Exterior", catKey: "gal.exterior", alt: "Infinity pool at dusk", span: "row-span-2" },
+  { src: g2, cat: "Interior", catKey: "gal.interior", alt: "Fine dining restaurant", span: "" },
+  { src: room1, cat: "Rooms", catKey: "gal.rooms", alt: "Deluxe king suite", span: "" },
+  { src: g5, cat: "Experience", catKey: "gal.experience", alt: "Rooftop terrace bar", span: "" },
+  { src: g3, cat: "Experience", catKey: "gal.experience", alt: "Spa room with candles", span: "row-span-2" },
+  { src: g6, cat: "Interior", catKey: "gal.interior", alt: "Marble bathroom", span: "" },
+  { src: g4, cat: "Exterior", catKey: "gal.exterior", alt: "Illuminated facade at night", span: "" },
+  { src: room3, cat: "Rooms", catKey: "gal.rooms", alt: "Penthouse living area", span: "" },
 ];
 
-const CATS = ["All", "Rooms", "Interior", "Exterior", "Experience"] as const;
+const CATS = [
+  { id: "All", key: "gal.all" },
+  { id: "Rooms", key: "gal.rooms" },
+  { id: "Interior", key: "gal.interior" },
+  { id: "Exterior", key: "gal.exterior" },
+  { id: "Experience", key: "gal.experience" },
+] as const;
 
 function Gallery() {
-  const [cat, setCat] = useState<(typeof CATS)[number]>("All");
+  const { t } = useI18n();
+  const [cat, setCat] = useState<(typeof CATS)[number]["id"]>("All");
   const filtered = GALLERY.filter((g) => cat === "All" || g.cat === cat);
 
   return (
     <section id="gallery" className="bg-muted/40 px-6 py-24 md:py-32">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading center eyebrow="The Gallery" title="A visual journey through Aurelle." />
+        <SectionHeading center eyebrow={t("gal.eyebrow")} title={t("gal.title")} />
 
         <div className="mt-10 flex flex-wrap justify-center gap-2">
           {CATS.map((c) => (
             <button
-              key={c}
-              onClick={() => setCat(c)}
+              key={c.id}
+              onClick={() => setCat(c.id)}
               className={`px-5 py-2 text-[11px] uppercase tracking-[0.22em] transition-all ${
-                cat === c
+                cat === c.id
                   ? "bg-foreground text-background"
                   : "border border-border bg-transparent text-foreground/70 hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
               }`}
             >
-              {c}
+              {t(c.key)}
             </button>
           ))}
         </div>
@@ -552,7 +544,7 @@ function Gallery() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               <figcaption className="absolute bottom-4 left-4 text-background opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                <div className="text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold-soft)]">{g.cat}</div>
+                <div className="text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold-soft)]">{t(g.catKey)}</div>
                 <div className="font-display text-lg">{g.alt}</div>
               </figcaption>
             </motion.figure>
@@ -566,43 +558,24 @@ function Gallery() {
 /* --------------------------- Testimonials --------------------------- */
 
 const REVIEWS = [
-  {
-    quote:
-      "Every detail at Maison Aurelle felt considered — the way morning light fell across the marble, the perfectly chilled champagne on arrival. Unforgettable.",
-    name: "Isabelle Moreau",
-    role: "Travel Editor, Maison & Voyage",
-  },
-  {
-    quote:
-      "We've stayed in many five-stars; few feel this personal. The concierge remembered every preference from our first night.",
-    name: "James & Eloise Park",
-    role: "Returning Guests",
-  },
-  {
-    quote:
-      "The rooftop pool at dusk is reason enough. The spa is reason to extend your stay. We did both.",
-    name: "Andrés Vela",
-    role: "Architect, Lisbon",
-  },
+  { qk: "test.r1", name: "Isabelle Moreau", roleKey: "test.r1.role" },
+  { qk: "test.r2", name: "James & Eloise Park", roleKey: "test.r2.role" },
+  { qk: "test.r3", name: "Andrés Vela", roleKey: "test.r3.role" },
 ];
 
 function Testimonials() {
+  const { t } = useI18n();
   return (
     <section className="bg-foreground px-6 py-24 text-background md:py-32">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          center
-          light
-          eyebrow="Guest Words"
-          title="Stories from those who have stayed with us."
-        />
+        <SectionHeading center light eyebrow={t("test.eyebrow")} title={t("test.title")} />
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           {REVIEWS.map((r, i) => (
             <Reveal key={r.name} delay={i * 0.1}>
               <figure className="flex h-full flex-col border border-background/15 bg-background/[0.03] p-8 backdrop-blur-sm">
                 <Quote size={28} className="text-[var(--color-gold)]" strokeWidth={1.2} />
                 <blockquote className="mt-6 flex-1 font-display text-xl leading-relaxed text-background/90">
-                  &ldquo;{r.quote}&rdquo;
+                  &ldquo;{t(r.qk)}&rdquo;
                 </blockquote>
                 <div className="mt-6 flex items-center gap-1 text-[var(--color-gold)]">
                   {Array.from({ length: 5 }).map((_, j) => (
@@ -611,7 +584,7 @@ function Testimonials() {
                 </div>
                 <figcaption className="mt-4 border-t border-background/15 pt-4">
                   <div className="text-sm font-medium text-background">{r.name}</div>
-                  <div className="text-xs uppercase tracking-[0.22em] text-background/55">{r.role}</div>
+                  <div className="text-xs uppercase tracking-[0.22em] text-background/55">{t(r.roleKey)}</div>
                 </figcaption>
               </figure>
             </Reveal>
@@ -646,25 +619,26 @@ function Counter({ to, suffix = "", decimals = 0 }: { to: number; suffix?: strin
 }
 
 const STATS = [
-  { v: 5000, suffix: "+", label: "Happy Guests" },
-  { v: 50, suffix: "", label: "Signature Rooms" },
-  { v: 10, suffix: "+", label: "Years of Hospitality" },
-  { v: 4.9, suffix: "", label: "Guest Rating", decimals: 1 },
+  { v: 5000, suffix: "+", labelKey: "stats.guests" },
+  { v: 50, suffix: "", labelKey: "stats.rooms" },
+  { v: 10, suffix: "+", labelKey: "stats.years" },
+  { v: 4.9, suffix: "", labelKey: "stats.rating", decimals: 1 },
 ];
 
 function Stats() {
+  const { t } = useI18n();
   return (
     <section className="bg-background px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-y-12 border-y border-border py-16 sm:grid-cols-2 md:grid-cols-4">
           {STATS.map((s, i) => (
-            <Reveal key={s.label} delay={i * 0.08}>
+            <Reveal key={s.labelKey} delay={i * 0.08}>
               <div className="text-center">
                 <div className="font-display text-5xl text-foreground md:text-6xl">
                   <Counter to={s.v} suffix={s.suffix} decimals={s.decimals ?? 0} />
                 </div>
                 <div className="mt-3 text-[11px] uppercase tracking-[0.28em] text-muted-foreground">
-                  {s.label}
+                  {t(s.labelKey)}
                 </div>
               </div>
             </Reveal>
@@ -678,13 +652,14 @@ function Stats() {
 /* --------------------------- Contact --------------------------- */
 
 function Contact() {
+  const { t } = useI18n();
   return (
     <section id="contact" className="relative overflow-hidden bg-muted/40 px-6 py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 md:grid-cols-2 md:items-center">
         <div>
-          <SectionHeading eyebrow="Get in Touch" title="We would be delighted to welcome you." />
+          <SectionHeading eyebrow={t("contact.eyebrow")} title={t("contact.title")} />
           <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">
-            Our concierge team is available around the clock to arrange your stay, recommend experiences, or simply answer a question.
+            {t("contact.desc")}
           </p>
 
           <ul className="mt-10 space-y-6">
@@ -697,7 +672,7 @@ function Contact() {
                   <Phone size={16} />
                 </span>
                 <span>
-                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">Telephone</span>
+                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">{t("contact.tel")}</span>
                   <span className="mt-1 block font-display text-2xl text-foreground group-hover:text-[var(--color-gold)]">
                     +1 800 555 0199
                   </span>
@@ -713,7 +688,7 @@ function Contact() {
                   <Mail size={16} />
                 </span>
                 <span>
-                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">Email</span>
+                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">{t("contact.email")}</span>
                   <span className="mt-1 block font-display text-2xl text-foreground group-hover:text-[var(--color-gold)]">
                     concierge@maisonaurelle.com
                   </span>
@@ -726,7 +701,7 @@ function Contact() {
                   <MapPin size={16} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">Location</span>
+                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">{t("contact.loc")}</span>
                   <span className="mt-1 block font-display text-2xl text-foreground">
                     24 Rue de l'Aurore
                   </span>
@@ -765,10 +740,10 @@ function Contact() {
               className="aspect-[4/5] w-full object-cover shadow-[var(--shadow-luxe)]"
             />
             <div className="absolute inset-x-6 bottom-6 bg-background/95 p-6 backdrop-blur-sm sm:inset-x-10">
-              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">Reception Hours</div>
-              <div className="mt-2 font-display text-2xl text-foreground">Open 24 hours, every day</div>
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">{t("contact.hours")}</div>
+              <div className="mt-2 font-display text-2xl text-foreground">{t("contact.hours.v")}</div>
               <div className="mt-1 text-sm text-muted-foreground">
-                Check-in from 3:00 pm · Check-out by 12:00 pm
+                {t("contact.check")}
               </div>
             </div>
           </div>
@@ -781,6 +756,7 @@ function Contact() {
 /* --------------------------- Footer --------------------------- */
 
 function Footer() {
+  const { t } = useI18n();
   return (
     <footer className="bg-foreground px-6 pt-20 pb-8 text-background">
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-4">
@@ -792,7 +768,7 @@ function Footer() {
             <span className="font-display text-2xl">Maison Aurelle</span>
           </div>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-background/65">
-            A five-star sanctuary of warm light, gold detail and quiet luxury — set within a restored Belle Époque landmark.
+            {t("foot.desc")}
           </p>
           <div className="mt-6 flex items-center gap-3">
             <a href="https://instagram.com" aria-label="Instagram" className="text-background/70 hover:text-[var(--color-gold)]"><Instagram size={18} /></a>
@@ -801,18 +777,18 @@ function Footer() {
         </div>
 
         <div>
-          <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">Explore</div>
+          <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">{t("foot.explore")}</div>
           <ul className="mt-5 space-y-3 text-sm text-background/75">
             {NAV.map((n) => (
               <li key={n.href}>
-                <a href={n.href} className="hover:text-[var(--color-gold)]">{n.label}</a>
+                <a href={n.href} className="hover:text-[var(--color-gold)]">{t(n.key)}</a>
               </li>
             ))}
           </ul>
         </div>
 
         <div>
-          <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">Contact</div>
+          <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">{t("foot.contact")}</div>
           <ul className="mt-5 space-y-3 text-sm text-background/75">
             <li><a href="tel:+18005550199" className="hover:text-[var(--color-gold)]">+1 800 555 0199</a></li>
             <li><a href="mailto:concierge@maisonaurelle.com" className="hover:text-[var(--color-gold)] break-all">concierge@maisonaurelle.com</a></li>
@@ -822,8 +798,8 @@ function Footer() {
       </div>
 
       <div className="mx-auto mt-16 flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-background/15 pt-6 text-xs text-background/55 sm:flex-row">
-        <div>© {new Date().getFullYear()} Maison Aurelle. All rights reserved.</div>
-        <div className="uppercase tracking-[0.22em]">Crafted with care · Paris</div>
+        <div>© {new Date().getFullYear()} Maison Aurelle. {t("foot.rights")}</div>
+        <div className="uppercase tracking-[0.22em]">{t("foot.craft")}</div>
       </div>
     </footer>
   );
@@ -833,17 +809,19 @@ function Footer() {
 
 function Index() {
   return (
-    <main className="bg-background text-foreground">
-      <Navbar />
-      <Hero />
-      <About />
-      <Rooms />
-      <Amenities />
-      <Gallery />
-      <Testimonials />
-      <Stats />
-      <Contact />
-      <Footer />
-    </main>
+    <I18nProvider>
+      <main className="bg-background text-foreground">
+        <Navbar />
+        <Hero />
+        <About />
+        <Rooms />
+        <Amenities />
+        <Gallery />
+        <Testimonials />
+        <Stats />
+        <Contact />
+        <Footer />
+      </main>
+    </I18nProvider>
   );
 }
