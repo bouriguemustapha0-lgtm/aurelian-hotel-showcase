@@ -441,36 +441,33 @@ function Rooms() {
 
 /* --------------------------- Amenities --------------------------- */
 
-const AMENITIES = [
-  { icon: Wifi, t: "Free Wi-Fi", d: "Lightning-fast fibre across every suite." },
-  { icon: UtensilsCrossed, t: "Restaurant", d: "Seasonal tasting menu by Chef Lemaire." },
-  { icon: Waves, t: "Swimming Pool", d: "Heated rooftop infinity pool with city view." },
-  { icon: Dumbbell, t: "Fitness Studio", d: "24/7 strength & cardio with Technogym." },
-  { icon: Sparkles, t: "Aurelle Spa", d: "Hammam, sauna and signature gold facials." },
-  { icon: Car, t: "Valet Parking", d: "Discreet underground parking with concierge." },
+const AMENITY_ITEMS = [
+  { icon: Wifi, tk: "am.wifi.t", dk: "am.wifi.d" },
+  { icon: UtensilsCrossed, tk: "am.rest.t", dk: "am.rest.d" },
+  { icon: Waves, tk: "am.pool.t", dk: "am.pool.d" },
+  { icon: Dumbbell, tk: "am.fit.t", dk: "am.fit.d" },
+  { icon: Sparkles, tk: "am.spa.t", dk: "am.spa.d" },
+  { icon: Car, tk: "am.valet.t", dk: "am.valet.d" },
 ];
 
 function Amenities() {
+  const { t } = useI18n();
   return (
     <section id="amenities" className="bg-background px-6 py-24 md:py-32">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          center
-          eyebrow="Hotel Amenities"
-          title="Curated comforts, refined to the smallest detail."
-        />
+        <SectionHeading center eyebrow={t("am.eyebrow")} title={t("am.title")} />
         <div className="mt-16 grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
-          {AMENITIES.map((a, i) => {
+          {AMENITY_ITEMS.map((a, i) => {
             const Icon = a.icon;
             return (
-              <Reveal key={a.t} delay={i * 0.05}>
+              <Reveal key={a.tk} delay={i * 0.05}>
                 <div className="group flex h-full flex-col items-start gap-5 bg-background p-10 transition-colors duration-500 hover:bg-muted/60">
                   <div className="grid h-14 w-14 place-items-center rounded-full border border-[var(--color-gold)] text-[var(--color-gold)] transition-transform duration-500 group-hover:-translate-y-1">
                     <Icon size={22} strokeWidth={1.4} />
                   </div>
                   <div>
-                    <h3 className="text-2xl">{a.t}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a.d}</p>
+                    <h3 className="text-2xl">{t(a.tk)}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(a.dk)}</p>
                   </div>
                 </div>
               </Reveal>
