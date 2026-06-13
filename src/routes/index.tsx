@@ -123,11 +123,11 @@ function SectionHeading({
 /* --------------------------- Navbar --------------------------- */
 
 const NAV = [
-  { href: "#home", label: "Home" },
-  { href: "#rooms", label: "Rooms" },
-  { href: "#amenities", label: "Amenities" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#contact", label: "Contact" },
+  { href: "#home", key: "nav.home" },
+  { href: "#rooms", key: "nav.rooms" },
+  { href: "#amenities", key: "nav.amenities" },
+  { href: "#gallery", key: "nav.gallery" },
+  { href: "#contact", key: "nav.contact" },
 ];
 
 function Navbar() {
