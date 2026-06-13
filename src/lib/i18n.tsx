@@ -7,7 +7,10 @@ export const LANGS = [
   { code: "es", label: "ES", name: "Español" },
   { code: "de", label: "DE", name: "Deutsch" },
   { code: "it", label: "IT", name: "Italiano" },
+  { code: "ar", label: "ع", name: "العربية" },
 ] as const;
+
+const RTL_LANGS = new Set(["ar"]);
 
 export type Lang = (typeof LANGS)[number]["code"];
 
@@ -257,9 +260,55 @@ const it: Dict = {
   "foot.rights": "Tutti i diritti riservati.", "foot.craft": "Realizzato con cura · Parigi",
 };
 
-const DICTS: Record<Lang, Dict> = { en, fr, es, de, it };
+const ar: Dict = {
+  "nav.home": "الرئيسية", "nav.rooms": "الغرف", "nav.amenities": "الخدمات", "nav.gallery": "المعرض", "nav.contact": "اتصل بنا",
+  "hero.eyebrow": "ملاذ خمس نجوم · تأسس عام 2014",
+  "hero.title.1": "اختبر الفخامة", "hero.title.em": "تتجاوز", "hero.title.2": "كل التوقعات",
+  "hero.desc": "اكتشف غرفًا أنيقة وراحة فاخرة وضيافة لا تُنسى في قلب مدينة لا تنام.",
+  "hero.cta1": "استكشف الغرف", "hero.cta2": "تواصل معنا", "hero.scroll": "تمرير",
+  "about.eyebrow": "قصتنا",
+  "about.title": "ملاذ يلتقي فيه التراث بالحداثة الهادئة.",
+  "about.desc": "داخل معلم من عصر البيل إيبوك تم ترميمه، ميزون أوريل هي رسالة حب للفخامة الهادئة — ضوء دافئ، رخام مصقول يدويًا، وفلسفة خدمة متوارثة عبر أجيال من الفندقيين.",
+  "about.f1.t": "ديكورات مصنوعة يدويًا", "about.f1.d": "أثاث مصمم خصيصًا من ورش أوروبية.",
+  "about.f2.t": "مطبخ نجوم ميشلان", "about.f2.d": "قوائم موسمية من شيف حائز على نجمتين.",
+  "about.f3.t": "كونسيرج شخصي", "about.f3.d": "مضيف مخصص طوال فترة إقامتك.",
+  "about.f4.t": "ملاذ العافية", "about.f4.d": "سبا تحت الأرض مع حمام معدني وحوض بارد.",
+  "rooms.eyebrow": "إقامات مميزة", "rooms.title": "الغرف والأجنحة المميزة",
+  "rooms.desc": "كل مساحة مصممة كملاذ خاص — توازن مدروس بين الأبيض الدافئ والحجر الفحمي ولمسات ذهبية هادئة.",
+  "rooms.from": "من", "rooms.night": "/ليلة", "rooms.view": "عرض التفاصيل", "rooms.guests": "ضيوف",
+  "room.deluxe.name": "ديلوكس كينغ", "room.deluxe.desc": "ملاذ هادئ بنوافذ بانورامية وأقمشة حريرية دافئة.",
+  "room.exec.name": "الجناح التنفيذي", "room.exec.desc": "غرفة معيشة خاصة بجلود مخيطة يدويًا ونجارة مصممة خصيصًا.",
+  "room.pent.name": "بنتهاوس أوريل", "room.pent.desc": "إقامتنا المميزة في الطابق العلوي مع شرفة خاصة وخادم شخصي.",
+  "am.eyebrow": "خدمات الفندق", "am.title": "وسائل راحة منتقاة بدقة في أصغر التفاصيل.",
+  "am.wifi.t": "واي فاي مجاني", "am.wifi.d": "ألياف فائقة السرعة في كل جناح.",
+  "am.rest.t": "المطعم", "am.rest.d": "قائمة تذوق موسمية من الشيف لوميغ.",
+  "am.pool.t": "حمام السباحة", "am.pool.d": "حمام سباحة لا متناهي مدفأ على السطح مع إطلالة على المدينة.",
+  "am.fit.t": "صالة اللياقة", "am.fit.d": "تمارين القوة والكارديو 24/7 مع تكنوجيم.",
+  "am.spa.t": "سبا أوريل", "am.spa.d": "حمام، ساونا، وعلاجات وجه بالذهب.",
+  "am.valet.t": "خدمة صف السيارات", "am.valet.d": "موقف سيارات تحت الأرض مع كونسيرج.",
+  "gal.eyebrow": "المعرض", "gal.title": "رحلة بصرية عبر أوريل.",
+  "gal.all": "الكل", "gal.rooms": "الغرف", "gal.interior": "الداخل", "gal.exterior": "الخارج", "gal.experience": "التجربة",
+  "test.eyebrow": "كلمات الضيوف", "test.title": "قصص من أقاموا معنا.",
+  "test.r1": "كل تفصيل في ميزون أوريل بدا مدروسًا — ضوء الصباح على الرخام، الشمبانيا المثلجة عند الوصول. لا يُنسى.",
+  "test.r1.role": "محررة سفر، ميزون آند فوياج",
+  "test.r2": "أقمنا في العديد من فنادق الخمس نجوم؛ قليلة تشعر بهذه الخصوصية. الكونسيرج تذكر كل تفضيلاتنا.",
+  "test.r2.role": "ضيوف دائمون",
+  "test.r3": "حمام السباحة على السطح عند الغروب سبب كافٍ. السبا سبب لتمديد إقامتك. فعلنا الاثنين.",
+  "test.r3.role": "مهندس معماري، لشبونة",
+  "stats.guests": "ضيف سعيد", "stats.rooms": "غرفة مميزة", "stats.years": "سنوات من الضيافة", "stats.rating": "تقييم الضيوف",
+  "contact.eyebrow": "تواصل معنا", "contact.title": "يسعدنا الترحيب بكم.",
+  "contact.desc": "فريق الكونسيرج لدينا متاح على مدار الساعة لترتيب إقامتك أو الإجابة على أي سؤال.",
+  "contact.tel": "الهاتف", "contact.email": "البريد الإلكتروني", "contact.loc": "الموقع",
+  "contact.hours": "ساعات الاستقبال", "contact.hours.v": "مفتوح 24 ساعة، كل يوم",
+  "contact.check": "تسجيل الدخول من 3:00 مساءً · تسجيل الخروج قبل 12:00 ظهرًا",
+  "foot.desc": "ملاذ خمس نجوم من الضوء الدافئ والتفاصيل الذهبية والفخامة الهادئة — داخل معلم من عصر البيل إيبوك تم ترميمه.",
+  "foot.explore": "استكشف", "foot.contact": "اتصل",
+  "foot.rights": "جميع الحقوق محفوظة.", "foot.craft": "صُنع بعناية · باريس",
+};
 
-type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
+const DICTS: Record<Lang, Dict> = { en, fr, es, de, it, ar };
+
+type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string; dir: "ltr" | "rtl" };
 const I18nCtx = createContext<Ctx | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
@@ -270,17 +319,25 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (saved && DICTS[saved]) setLangState(saved);
   }, []);
 
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
+    }
+  }, [lang]);
+
   const setLang = (l: Lang) => {
     setLangState(l);
     if (typeof window !== "undefined") {
       localStorage.setItem("lang", l);
-      document.documentElement.lang = l;
     }
   };
 
+  const dir = RTL_LANGS.has(lang) ? "rtl" : "ltr";
+
   const t = (k: string) => DICTS[lang][k] ?? DICTS.en[k] ?? k;
 
-  return <I18nCtx.Provider value={{ lang, setLang, t }}>{children}</I18nCtx.Provider>;
+  return <I18nCtx.Provider value={{ lang, setLang, t, dir }}>{children}</I18nCtx.Provider>;
 }
 
 export function useI18n() {
