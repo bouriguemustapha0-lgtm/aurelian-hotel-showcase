@@ -373,71 +373,50 @@ function About() {
 
 /* --------------------------- Rooms --------------------------- */
 
-const ROOMS = [
-  {
-    img: room1,
-    name: "Deluxe King",
-    description: "A serene retreat with panoramic skyline windows and warm silk linens.",
-    capacity: "2 Guests",
-    size: "48 m²",
-    price: 480,
-  },
-  {
-    img: room2,
-    name: "Executive Suite",
-    description: "A private living room with hand-stitched leather and bespoke joinery.",
-    capacity: "3 Guests",
-    size: "72 m²",
-    price: 720,
-  },
-  {
-    img: room3,
-    name: "Aurelle Penthouse",
-    description: "Our signature top-floor residence with private terrace and butler.",
-    capacity: "4 Guests",
-    size: "140 m²",
-    price: 1480,
-  },
-];
-
 function Rooms() {
+  const { t } = useI18n();
+  const ROOMS = [
+    { img: room1, nameKey: "room.deluxe.name", descKey: "room.deluxe.desc", capacity: 2, size: "48 m²", price: 480 },
+    { img: room2, nameKey: "room.exec.name", descKey: "room.exec.desc", capacity: 3, size: "72 m²", price: 720 },
+    { img: room3, nameKey: "room.pent.name", descKey: "room.pent.desc", capacity: 4, size: "140 m²", price: 1480 },
+  ];
   return (
     <section id="rooms" className="bg-muted/50 px-6 py-24 md:py-32">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           center
-          eyebrow="Signature Stays"
-          title="Featured Rooms & Suites"
-          description="Each space is composed as a private retreat — a deliberate balance of warm white, charcoal stone and quiet gold detail."
+          eyebrow={t("rooms.eyebrow")}
+          title={t("rooms.title")}
+          description={t("rooms.desc")}
         />
 
         <div className="mt-16 grid gap-10 md:grid-cols-3">
           {ROOMS.map((r, i) => (
-            <Reveal key={r.name} delay={i * 0.1}>
+            <Reveal key={r.nameKey} delay={i * 0.1}>
               <article className="group relative flex h-full flex-col bg-card shadow-[var(--shadow-soft)] transition-shadow duration-500 hover:shadow-[var(--shadow-luxe)]">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={r.img}
-                    alt={`${r.name} at Maison Aurelle`}
+                    alt={`${t(r.nameKey)} at Maison Aurelle`}
                     loading="lazy"
                     width={1280}
                     height={960}
                     className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
                   />
                   <div className="absolute right-0 top-0 bg-background/95 px-5 py-3 text-right">
-                    <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">From</div>
+                    <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{t("rooms.from")}</div>
                     <div className="font-display text-2xl text-foreground">
                       ${r.price}
-                      <span className="text-xs text-muted-foreground"> /night</span>
+                      <span className="text-xs text-muted-foreground"> {t("rooms.night")}</span>
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-7">
-                  <h3 className="text-2xl">{r.name}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{r.description}</p>
+                  <h3 className="text-2xl">{t(r.nameKey)}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{t(r.descKey)}</p>
                   <div className="mt-6 flex items-center gap-5 text-xs uppercase tracking-[0.18em] text-foreground/70">
                     <span className="inline-flex items-center gap-2">
-                      <Users size={14} className="text-[var(--color-gold)]" /> {r.capacity}
+                      <Users size={14} className="text-[var(--color-gold)]" /> {r.capacity} {t("rooms.guests")}
                     </span>
                     <span className="inline-flex items-center gap-2">
                       <Maximize size={14} className="text-[var(--color-gold)]" /> {r.size}
@@ -447,7 +426,7 @@ function Rooms() {
                     href="#contact"
                     className="mt-7 inline-flex items-center justify-between border-t border-border pt-5 text-xs uppercase tracking-[0.22em] text-foreground transition-colors hover:text-[var(--color-gold)]"
                   >
-                    View Details
+                    {t("rooms.view")}
                     <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </a>
                 </div>
