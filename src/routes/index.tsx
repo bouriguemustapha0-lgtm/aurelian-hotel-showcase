@@ -21,6 +21,7 @@ import {
   Quote,
   Star,
 } from "lucide-react";
+import { I18nProvider, LanguageSwitcher, useI18n } from "@/lib/i18n";
 
 import hero from "@/assets/hotel/hero.jpg";
 import about from "@/assets/hotel/about.jpg";
