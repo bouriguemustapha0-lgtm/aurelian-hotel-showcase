@@ -809,17 +809,19 @@ function Footer() {
 
 function Index() {
   return (
-    <main className="bg-background text-foreground">
-      <Navbar />
-      <Hero />
-      <About />
-      <Rooms />
-      <Amenities />
-      <Gallery />
-      <Testimonials />
-      <Stats />
-      <Contact />
-      <Footer />
-    </main>
+    <I18nProvider>
+      <main className="bg-background text-foreground">
+        <Navbar />
+        <Hero />
+        <About />
+        <Rooms />
+        <Amenities />
+        <Gallery />
+        <Testimonials />
+        <Stats />
+        <Contact />
+        <Footer />
+      </main>
+    </I18nProvider>
   );
 }
