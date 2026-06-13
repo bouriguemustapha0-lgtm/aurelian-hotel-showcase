@@ -652,13 +652,14 @@ function Stats() {
 /* --------------------------- Contact --------------------------- */
 
 function Contact() {
+  const { t } = useI18n();
   return (
     <section id="contact" className="relative overflow-hidden bg-muted/40 px-6 py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 md:grid-cols-2 md:items-center">
         <div>
-          <SectionHeading eyebrow="Get in Touch" title="We would be delighted to welcome you." />
+          <SectionHeading eyebrow={t("contact.eyebrow")} title={t("contact.title")} />
           <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">
-            Our concierge team is available around the clock to arrange your stay, recommend experiences, or simply answer a question.
+            {t("contact.desc")}
           </p>
 
           <ul className="mt-10 space-y-6">
@@ -671,7 +672,7 @@ function Contact() {
                   <Phone size={16} />
                 </span>
                 <span>
-                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">Telephone</span>
+                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">{t("contact.tel")}</span>
                   <span className="mt-1 block font-display text-2xl text-foreground group-hover:text-[var(--color-gold)]">
                     +1 800 555 0199
                   </span>
@@ -687,7 +688,7 @@ function Contact() {
                   <Mail size={16} />
                 </span>
                 <span>
-                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">Email</span>
+                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">{t("contact.email")}</span>
                   <span className="mt-1 block font-display text-2xl text-foreground group-hover:text-[var(--color-gold)]">
                     concierge@maisonaurelle.com
                   </span>
@@ -700,7 +701,7 @@ function Contact() {
                   <MapPin size={16} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">Location</span>
+                  <span className="block text-[10px] uppercase tracking-[0.28em] text-muted-foreground">{t("contact.loc")}</span>
                   <span className="mt-1 block font-display text-2xl text-foreground">
                     24 Rue de l'Aurore
                   </span>
@@ -739,10 +740,10 @@ function Contact() {
               className="aspect-[4/5] w-full object-cover shadow-[var(--shadow-luxe)]"
             />
             <div className="absolute inset-x-6 bottom-6 bg-background/95 p-6 backdrop-blur-sm sm:inset-x-10">
-              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">Reception Hours</div>
-              <div className="mt-2 font-display text-2xl text-foreground">Open 24 hours, every day</div>
+              <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">{t("contact.hours")}</div>
+              <div className="mt-2 font-display text-2xl text-foreground">{t("contact.hours.v")}</div>
               <div className="mt-1 text-sm text-muted-foreground">
-                Check-in from 3:00 pm · Check-out by 12:00 pm
+                {t("contact.check")}
               </div>
             </div>
           </div>
@@ -755,6 +756,7 @@ function Contact() {
 /* --------------------------- Footer --------------------------- */
 
 function Footer() {
+  const { t } = useI18n();
   return (
     <footer className="bg-foreground px-6 pt-20 pb-8 text-background">
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-4">
@@ -766,7 +768,7 @@ function Footer() {
             <span className="font-display text-2xl">Maison Aurelle</span>
           </div>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-background/65">
-            A five-star sanctuary of warm light, gold detail and quiet luxury — set within a restored Belle Époque landmark.
+            {t("foot.desc")}
           </p>
           <div className="mt-6 flex items-center gap-3">
             <a href="https://instagram.com" aria-label="Instagram" className="text-background/70 hover:text-[var(--color-gold)]"><Instagram size={18} /></a>
@@ -775,18 +777,18 @@ function Footer() {
         </div>
 
         <div>
-          <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">Explore</div>
+          <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">{t("foot.explore")}</div>
           <ul className="mt-5 space-y-3 text-sm text-background/75">
             {NAV.map((n) => (
               <li key={n.href}>
-                <a href={n.href} className="hover:text-[var(--color-gold)]">{n.label}</a>
+                <a href={n.href} className="hover:text-[var(--color-gold)]">{t(n.key)}</a>
               </li>
             ))}
           </ul>
         </div>
 
         <div>
-          <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">Contact</div>
+          <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--color-gold)]">{t("foot.contact")}</div>
           <ul className="mt-5 space-y-3 text-sm text-background/75">
             <li><a href="tel:+18005550199" className="hover:text-[var(--color-gold)]">+1 800 555 0199</a></li>
             <li><a href="mailto:concierge@maisonaurelle.com" className="hover:text-[var(--color-gold)] break-all">concierge@maisonaurelle.com</a></li>
@@ -796,8 +798,8 @@ function Footer() {
       </div>
 
       <div className="mx-auto mt-16 flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-background/15 pt-6 text-xs text-background/55 sm:flex-row">
-        <div>© {new Date().getFullYear()} Maison Aurelle. All rights reserved.</div>
-        <div className="uppercase tracking-[0.22em]">Crafted with care · Paris</div>
+        <div>© {new Date().getFullYear()} Maison Aurelle. {t("foot.rights")}</div>
+        <div className="uppercase tracking-[0.22em]">{t("foot.craft")}</div>
       </div>
     </footer>
   );
