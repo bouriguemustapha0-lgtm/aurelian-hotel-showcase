@@ -558,43 +558,24 @@ function Gallery() {
 /* --------------------------- Testimonials --------------------------- */
 
 const REVIEWS = [
-  {
-    quote:
-      "Every detail at Maison Aurelle felt considered — the way morning light fell across the marble, the perfectly chilled champagne on arrival. Unforgettable.",
-    name: "Isabelle Moreau",
-    role: "Travel Editor, Maison & Voyage",
-  },
-  {
-    quote:
-      "We've stayed in many five-stars; few feel this personal. The concierge remembered every preference from our first night.",
-    name: "James & Eloise Park",
-    role: "Returning Guests",
-  },
-  {
-    quote:
-      "The rooftop pool at dusk is reason enough. The spa is reason to extend your stay. We did both.",
-    name: "Andrés Vela",
-    role: "Architect, Lisbon",
-  },
+  { qk: "test.r1", name: "Isabelle Moreau", roleKey: "test.r1.role" },
+  { qk: "test.r2", name: "James & Eloise Park", roleKey: "test.r2.role" },
+  { qk: "test.r3", name: "Andrés Vela", roleKey: "test.r3.role" },
 ];
 
 function Testimonials() {
+  const { t } = useI18n();
   return (
     <section className="bg-foreground px-6 py-24 text-background md:py-32">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          center
-          light
-          eyebrow="Guest Words"
-          title="Stories from those who have stayed with us."
-        />
+        <SectionHeading center light eyebrow={t("test.eyebrow")} title={t("test.title")} />
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           {REVIEWS.map((r, i) => (
             <Reveal key={r.name} delay={i * 0.1}>
               <figure className="flex h-full flex-col border border-background/15 bg-background/[0.03] p-8 backdrop-blur-sm">
                 <Quote size={28} className="text-[var(--color-gold)]" strokeWidth={1.2} />
                 <blockquote className="mt-6 flex-1 font-display text-xl leading-relaxed text-background/90">
-                  &ldquo;{r.quote}&rdquo;
+                  &ldquo;{t(r.qk)}&rdquo;
                 </blockquote>
                 <div className="mt-6 flex items-center gap-1 text-[var(--color-gold)]">
                   {Array.from({ length: 5 }).map((_, j) => (
@@ -603,7 +584,7 @@ function Testimonials() {
                 </div>
                 <figcaption className="mt-4 border-t border-background/15 pt-4">
                   <div className="text-sm font-medium text-background">{r.name}</div>
-                  <div className="text-xs uppercase tracking-[0.22em] text-background/55">{r.role}</div>
+                  <div className="text-xs uppercase tracking-[0.22em] text-background/55">{t(r.roleKey)}</div>
                 </figcaption>
               </figure>
             </Reveal>
