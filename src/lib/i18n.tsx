@@ -337,7 +337,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const t = (k: string) => DICTS[lang][k] ?? DICTS.en[k] ?? k;
 
-  return <I18nCtx.Provider value={{ lang, setLang, t }}>{children}</I18nCtx.Provider>;
+  return <I18nCtx.Provider value={{ lang, setLang, t, dir }}>{children}</I18nCtx.Provider>;
 }
 
 export function useI18n() {
