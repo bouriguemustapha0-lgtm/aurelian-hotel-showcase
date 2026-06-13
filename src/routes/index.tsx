@@ -482,39 +482,46 @@ function Amenities() {
 /* --------------------------- Gallery --------------------------- */
 
 const GALLERY = [
-  { src: g1, cat: "Exterior", alt: "Infinity pool at dusk", span: "row-span-2" },
-  { src: g2, cat: "Interior", alt: "Fine dining restaurant", span: "" },
-  { src: room1, cat: "Rooms", alt: "Deluxe king suite", span: "" },
-  { src: g5, cat: "Experience", alt: "Rooftop terrace bar", span: "" },
-  { src: g3, cat: "Experience", alt: "Spa room with candles", span: "row-span-2" },
-  { src: g6, cat: "Interior", alt: "Marble bathroom", span: "" },
-  { src: g4, cat: "Exterior", alt: "Illuminated facade at night", span: "" },
-  { src: room3, cat: "Rooms", alt: "Penthouse living area", span: "" },
+  { src: g1, cat: "Exterior", catKey: "gal.exterior", alt: "Infinity pool at dusk", span: "row-span-2" },
+  { src: g2, cat: "Interior", catKey: "gal.interior", alt: "Fine dining restaurant", span: "" },
+  { src: room1, cat: "Rooms", catKey: "gal.rooms", alt: "Deluxe king suite", span: "" },
+  { src: g5, cat: "Experience", catKey: "gal.experience", alt: "Rooftop terrace bar", span: "" },
+  { src: g3, cat: "Experience", catKey: "gal.experience", alt: "Spa room with candles", span: "row-span-2" },
+  { src: g6, cat: "Interior", catKey: "gal.interior", alt: "Marble bathroom", span: "" },
+  { src: g4, cat: "Exterior", catKey: "gal.exterior", alt: "Illuminated facade at night", span: "" },
+  { src: room3, cat: "Rooms", catKey: "gal.rooms", alt: "Penthouse living area", span: "" },
 ];
 
-const CATS = ["All", "Rooms", "Interior", "Exterior", "Experience"] as const;
+const CATS = [
+  { id: "All", key: "gal.all" },
+  { id: "Rooms", key: "gal.rooms" },
+  { id: "Interior", key: "gal.interior" },
+  { id: "Exterior", key: "gal.exterior" },
+  { id: "Experience", key: "gal.experience" },
+] as const;
 
 function Gallery() {
-  const [cat, setCat] = useState<(typeof CATS)[number]>("All");
+  const { t } = useI18n();
+  const [cat, setCat] = useState<(typeof CATS)[number]["id"]>("All");
   const filtered = GALLERY.filter((g) => cat === "All" || g.cat === cat);
 
   return (
     <section id="gallery" className="bg-muted/40 px-6 py-24 md:py-32">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading center eyebrow="The Gallery" title="A visual journey through Aurelle." />
+        <SectionHeading center eyebrow={t("gal.eyebrow")} title={t("gal.title")} />
 
         <div className="mt-10 flex flex-wrap justify-center gap-2">
           {CATS.map((c) => (
             <button
-              key={c}
-              onClick={() => setCat(c)}
+              key={c.id}
+              onClick={() => setCat(c.id)}
               className={`px-5 py-2 text-[11px] uppercase tracking-[0.22em] transition-all ${
-                cat === c
+                cat === c.id
                   ? "bg-foreground text-background"
                   : "border border-border bg-transparent text-foreground/70 hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
               }`}
             >
-              {c}
+              {t(c.key)}
             </button>
           ))}
         </div>
@@ -537,7 +544,7 @@ function Gallery() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               <figcaption className="absolute bottom-4 left-4 text-background opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                <div className="text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold-soft)]">{g.cat}</div>
+                <div className="text-[10px] uppercase tracking-[0.22em] text-[var(--color-gold-soft)]">{t(g.catKey)}</div>
                 <div className="font-display text-lg">{g.alt}</div>
               </figcaption>
             </motion.figure>
