@@ -7,7 +7,10 @@ export const LANGS = [
   { code: "es", label: "ES", name: "Español" },
   { code: "de", label: "DE", name: "Deutsch" },
   { code: "it", label: "IT", name: "Italiano" },
+  { code: "ar", label: "ع", name: "العربية" },
 ] as const;
+
+const RTL_LANGS = new Set(["ar"]);
 
 export type Lang = (typeof LANGS)[number]["code"];
 
