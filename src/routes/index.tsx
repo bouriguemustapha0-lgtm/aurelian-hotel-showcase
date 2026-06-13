@@ -619,25 +619,26 @@ function Counter({ to, suffix = "", decimals = 0 }: { to: number; suffix?: strin
 }
 
 const STATS = [
-  { v: 5000, suffix: "+", label: "Happy Guests" },
-  { v: 50, suffix: "", label: "Signature Rooms" },
-  { v: 10, suffix: "+", label: "Years of Hospitality" },
-  { v: 4.9, suffix: "", label: "Guest Rating", decimals: 1 },
+  { v: 5000, suffix: "+", labelKey: "stats.guests" },
+  { v: 50, suffix: "", labelKey: "stats.rooms" },
+  { v: 10, suffix: "+", labelKey: "stats.years" },
+  { v: 4.9, suffix: "", labelKey: "stats.rating", decimals: 1 },
 ];
 
 function Stats() {
+  const { t } = useI18n();
   return (
     <section className="bg-background px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-y-12 border-y border-border py-16 sm:grid-cols-2 md:grid-cols-4">
           {STATS.map((s, i) => (
-            <Reveal key={s.label} delay={i * 0.08}>
+            <Reveal key={s.labelKey} delay={i * 0.08}>
               <div className="text-center">
                 <div className="font-display text-5xl text-foreground md:text-6xl">
                   <Counter to={s.v} suffix={s.suffix} decimals={s.decimals ?? 0} />
                 </div>
                 <div className="mt-3 text-[11px] uppercase tracking-[0.28em] text-muted-foreground">
-                  {s.label}
+                  {t(s.labelKey)}
                 </div>
               </div>
             </Reveal>
