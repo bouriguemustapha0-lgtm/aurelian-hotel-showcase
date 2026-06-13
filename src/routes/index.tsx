@@ -131,6 +131,7 @@ const NAV = [
 ];
 
 function Navbar() {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -170,13 +171,14 @@ function Navbar() {
                   scrolled ? "text-foreground/80" : "text-background/85"
                 }`}
               >
-                {n.label}
+                {t(n.key)}
               </a>
             </li>
           ))}
         </ul>
 
-        <div className="hidden justify-end md:flex">
+        <div className="hidden items-center justify-end gap-6 md:flex">
+          <LanguageSwitcher dark={scrolled} />
           <a
             href="tel:+18005550199"
             className={`inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] transition-colors hover:text-[var(--color-gold)] ${
@@ -187,13 +189,16 @@ function Navbar() {
           </a>
         </div>
 
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setOpen((v) => !v)}
-          className={`justify-self-end md:hidden ${scrolled ? "text-foreground" : "text-background"}`}
-        >
-          {open ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center gap-4 justify-self-end md:hidden">
+          <LanguageSwitcher dark={scrolled} />
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setOpen((v) => !v)}
+            className={scrolled ? "text-foreground" : "text-background"}
+          >
+            {open ? <X /> : <Menu />}
+          </button>
+        </div>
       </nav>
 
       {/* mobile menu */}
@@ -211,7 +216,7 @@ function Navbar() {
                 onClick={() => setOpen(false)}
                 className="block py-3 text-sm uppercase tracking-[0.22em] text-foreground/80 hover:text-[var(--color-gold)]"
               >
-                {n.label}
+                {t(n.key)}
               </a>
             </li>
           ))}
